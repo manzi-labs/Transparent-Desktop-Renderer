@@ -28,6 +28,7 @@ static HWND hwnd = nullptr;
 
 static int frameRate = 60;
 static bool isRunning = false;
+static bool debugMode = false;
 
 /**
  * @brief Initializes SDL, COM, and creates the main window and renderer.
@@ -111,7 +112,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam,
  * @brief Entry point. Initializes systems, runs the main loop, and cleans up.
  */
 int main(int argc, char* argv[]) {
-    AttachConsole();
+    if (debugMode) {
+        AttachConsole();
+    }
 
     SDLState state;
     if (!Initialize(state)) {
@@ -164,8 +167,8 @@ int main(int argc, char* argv[]) {
         };
 
         SDL_Rect dest{
-            0,
-            0,
+            state.logw / 2,
+            state.logh / 2,
             spriteSize,
             spriteSize
         };
